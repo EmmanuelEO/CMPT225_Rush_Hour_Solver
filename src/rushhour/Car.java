@@ -6,16 +6,28 @@ import java.util.*;
 
 public class Car
 {
+	private char name;
 	private byte lengthAndDir; // if negative, then the car is vertical, else if positive, then horizontal
 	private byte pos; // is a number from 0 to 35 (there are 36 board spaces) -> position 0 is the bottom left
 					// is always the leftmost or lower most point on the car
 	
-	public Car(int x, int y)
+	public Car(char n, int x, int y)
 	{	
+		name = n;
 		this.pos = 0;
 		this.setPos(x, y);
 	}
-		
+
+	public void setName(char n)
+	{
+		name = n;
+	}
+
+	public char getName()
+	{
+		return name;
+	}
+	
 	public int getLength()
 	{
 		return Math.abs(lengthAndDir);

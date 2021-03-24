@@ -9,11 +9,11 @@ public class GameNode
 	private GameNode parent;
 	private boolean checked = false;
 	
-	private HashMap<Character, Car> cars;
+	private ArrayList<Car> cars;
 	
 	public GameNode()
 	{
-		cars = new HashMap<Character, Car>();
+		cars = new ArrayList<Car>();
 	}
 }
 
