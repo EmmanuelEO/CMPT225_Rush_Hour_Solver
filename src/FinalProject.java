@@ -28,10 +28,11 @@ public class FinalProject
 		
 		for(char c : a.keySet())
 		{
-			Systen.out.println(7);
+			System.out.println(7);
 		}
 		
 		
 		
 	}
+
 }

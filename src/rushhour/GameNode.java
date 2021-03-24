@@ -16,3 +16,4 @@ public class GameNode
 		cars = new HashMap<Character, Car>();
 	}
 }
+
