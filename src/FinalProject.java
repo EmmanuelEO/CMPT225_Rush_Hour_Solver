@@ -26,6 +26,11 @@ public class FinalProject
 			System.out.println(ch.toString() + ca.getPos().x + ca.getPos().y);
 		});
 		
+		for(char c : a.keySet())
+		{
+			Systen.out.println(7);
+		}
+		
 		
 		
 	}
