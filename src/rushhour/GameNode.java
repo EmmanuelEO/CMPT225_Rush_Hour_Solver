@@ -12,7 +12,6 @@ public class GameNode
 	private byte h;
 	
 	private HashMap<Character, Car> cars;
-	//private HashSet<GameNode> neighbors;
 	
 	public GameNode()
 	{
@@ -27,8 +26,6 @@ public class GameNode
 		{
 			this.cars.put(name, new Car(node.getCars().get(name)));
 		}
-		
-		//neighbors = new HashSet<>();
 	}
 
 	public void setParent(GameNode p)
@@ -46,18 +43,20 @@ public class GameNode
 		return cars;
 	}
 
-	// TODO make a method that finds all neighbors of a given node
 	public HashSet<GameNode> getNeighbors()
 	{
-		// build board from car info
-		// loop through all cars
-		// find all available moves for each car
-		// create a new GameNode for each available move
+		// STEPS:
+		// 1. build board from car info
+		// 2. loop through all cars
+		// 2.1 find all available moves for each car
+		// 2.1.1 create a new GameNode for each available move
 		
 		HashSet<GameNode> neighbors = new HashSet<>();
 		
-		// build board by looping through cars
+		// 1. BUILD BOARD by looping through cars
 		char board[][] = new char[6][6];
+		for(int n = 0; n < 36; n++)
+			board[n % 6][n / 6] = ' '; // Initializing board to blank
 		
 		for(char name : cars.keySet())
 		{
@@ -65,7 +64,7 @@ public class GameNode
 			{
 				for(int n = 0; n < cars.get(name).getLength(); n++)
 				{
-					board[cars.get(name).getPos().x + n][cars.get(name).getPos().y] = name;
+					board[cars.get(name).getX() + n][cars.get(name).getY()] = name;
 				}
 			}
 			
@@ -73,7 +72,7 @@ public class GameNode
 			{
 				for(int n = 0; n < cars.get(name).getLength(); n++)
 				{
-					board[cars.get(name).getPos().x][cars.get(name).getPos().y + n] = name;
+					board[cars.get(name).getX()][cars.get(name).getY() + n] = name;
 				}
 			}
 			
@@ -84,18 +83,99 @@ public class GameNode
 			}
 		} // Done building board
 		
-		// Loop through all cars to find all available moves for each car
+		
+		
+		// 2. LOOP THROUGH ALL CARS
 		for(char name : cars.keySet())
 		{
+			// 2.1 FIND ALL AVAILABLE MOVES for the current car
 			
-		}
-		
+			// If car is vertical
+			if(cars.get(name).getDir() == -1)
+			{
+				// Find all moves that can be made going up
+				for(int y = cars.get(name).getY() - 1; y >= 0; y--)
+				{
+					if(board[cars.get(name).getX()][y] == ' ')
+					{
+						// This space is clear, so this is a valid move; add this as a neighbor
+						GameNode neighborNode = new GameNode(this);
+						neighborNode.getCars().get(name).setPos(cars.get(name).getX(), y);
+						// This makes the neighbor identical to this one except for the current cars position, which will be changed
+						neighbors.add(neighborNode);
+					}
+					else // There is another car blocking the path
+					{
+						break;
+					}
+				}
+				
+				// Find all moves that can be made going down
+				for(int y = cars.get(name).getY() + 1; y <= 6 - cars.get(name).getLength(); y++)
+				{
+					if(board[cars.get(name).getX()][y + cars.get(name).getLength() - 1] == ' ')
+					{
+						// This space is clear, so this is a valid move; add this as a neighbor
+						GameNode neighborNode = new GameNode(this);
+						neighborNode.getCars().get(name).setPos(cars.get(name).getX(), y);
+						// This makes the neighbor identical to this one except for the current cars position, which will be changed
+						neighbors.add(neighborNode);
+					}
+					else // There is another car blocking the path
+					{
+						break;
+					}
+				}
+			} // end of if car is vertical
+			
+			
+			// else if car is horizontal
+			else
+			{
+				// Find all moves that can be made going left
+				for(int x = cars.get(name).getX() - 1; x >= 0; x--)
+				{
+					if(board[x][cars.get(name).getY()] == ' ')
+					{
+						// This space is clear, so this is a valid move; add this as a neighbor
+						GameNode neighborNode = new GameNode(this);
+						neighborNode.getCars().get(name).setPos(x, cars.get(name).getY());
+						// This makes the neighbor identical to this one except for the current cars position, which will be changed
+						neighbors.add(neighborNode);
+					}
+					else // There is another car blocking the path
+					{
+						break;
+					}
+				}
+				
+				// Find all moves that can be made going right
+				for(int x = cars.get(name).getX() + 1; x <= 6 - cars.get(name).getLength(); x++)
+				{
+					if(board[x + cars.get(name).getLength() - 1][cars.get(name).getY()] == ' ')
+					{
+						// This space is clear, so this is a valid move; add this as a neighbor
+						GameNode neighborNode = new GameNode(this);
+						neighborNode.getCars().get(name).setPos(x, cars.get(name).getY());
+						// This makes the neighbor identical to this one except for the current cars position, which will be changed
+						neighbors.add(neighborNode);
+					}
+					else // There is another car blocking the path
+					{
+						break;
+					}
+				}
+			} // end of else if car is horizontal
+			
+			// All possible moves for this car have been added as neighbors
+			
+		} // end of loop through all cars
 		
 		return neighbors;
 	}
 
 	
-	// TODO make a method that calculates the h and f
+	// TODO make a method that calculates the h, maybe the f as well
 	
 	
 	// TODO implement hashcode()

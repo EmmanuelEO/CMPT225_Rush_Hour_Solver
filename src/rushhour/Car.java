@@ -7,8 +7,8 @@ import java.util.*;
 public class Car
 {
 	private byte lengthAndDir = 1; // if negative, then the car is vertical, else if positive, then horizontal
-	private byte pos = 0; // is a number from 0 to 35 (there are 36 board spaces) -> position 0 is the bottom left
-					// is always the leftmost or lower most point on the car
+	private byte pos = 0; // is a number from 0 to 35 (there are 36 board spaces) -> position 0 is the Top left
+					// is always the leftmost or upper most point on the car
 	
 	public Car(int x, int y)
 	{	
@@ -17,7 +17,7 @@ public class Car
 	
 	public Car(Car c)
 	{
-		this.setPos(c.getPos().x, c.getPos().y);
+		this.setPos(c.getX(), c.getY());
 		this.setDir(c.getDir());
 		this.setLength(c.getLength());
 	}
@@ -37,13 +37,15 @@ public class Car
 		
 		else return false;
 	}
-
-	public Point getPos()
+	
+	public int getX()
 	{
-		int x = pos % 6;
-		int y = pos / 6;
-		
-		return new Point(x, y);
+		return pos % 6;
+	}
+	
+	public int getY()
+	{
+		return pos / 6;
 	}
 
 	public boolean setPos(int x, int y)
