@@ -10,7 +10,6 @@ public class FinalProject
 	public static void main(String[] args)
 	{
 		
-		
 	}
 	
 	public static void testGameNodeDeepCopy()
@@ -23,7 +22,12 @@ public class FinalProject
 		
 		a.getCars().get('A').setPos(3, 4);
 		
-		System.out.println(a.getCars().get('A').getPos().x != b.getCars().get('A').getPos().x);
+		System.out.print("GameNode Deep Copy: ");
+		
+		if(a.getCars().get('A').getPos().x != b.getCars().get('A').getPos().x)
+			System.out.println("PASSED");
+		else
+			System.out.println("FAILED");
 	}
 
 }
