@@ -140,7 +140,7 @@ public class Solver
 		HashSet<GameNode> nodes = new HashSet<GameNode>();
 		nodes = initBoard.getNeighbors();
 		for (GameNode node:nodes) {
-			System.out.println(node);
+			System.out.println(node + "  " + node.hashCode());
 		}
 	}
 }
