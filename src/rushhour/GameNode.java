@@ -53,8 +53,7 @@ public class GameNode
 	@Override
 	public String toString() {
 		return "GameNode{\n" +
-				"cars=" + cars +
-				'}';
+				"cars=\n" + cars + "\n}";
 	}
 
 	@Override
@@ -86,12 +85,6 @@ public class GameNode
 	{
 		return cars;
 	}
-
-
-	// TODO
-	//  Make a method that finds all neighbors of a given node
-
-	// HashSet<GameNode> neighours;
 
 	public HashSet<GameNode> getNeighbors()
 	{
@@ -226,12 +219,12 @@ public class GameNode
 		return neighbors;
 	}
 
-
 	// TODO make a method that calculates the h, maybe the f as well
 	
+	// TODO make a method that calculates the h
 	
-	// TODO implement hashcode()
-
+	// TODO make a method that gives the f
+	
 
 
 

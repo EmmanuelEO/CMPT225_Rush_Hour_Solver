@@ -6,19 +6,24 @@ import java.util.HashSet;
 
 public class Solver
 {
-	private static GameNode initBoard;
-	private static char[][] matrix;
+	public static GameNode initBoard;
+	public static char[][] matrix;
 
-	public static void solveFromFile(String inputPath, String outputPath) {
-		try {
+	public static void solveFromFile(String inputPath, String outputPath)
+	{
+		try
+		{
 			initializeBoard(inputPath);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			System.out.println("The board has not been initialized.\n Please, check the board for errors and try again.\n");
 			e.printStackTrace();
 		}
 	}
 
-	private static void initializeBoard(String inputPath) throws Exception {
+	private static void initializeBoard(String inputPath) throws Exception
+	{
 		initBoard = new GameNode();
 		matrix = new char[6][6];
 		BufferedReader input = new BufferedReader(new FileReader(inputPath));
@@ -26,12 +31,18 @@ public class Solver
 		String str = input.readLine();
 		int l = 0;
 
-		while (str != null) {
-			if (str.length() == 6) {
-				for (int j = 0; j < str.length(); j++) {
+		while (str != null)
+		{
+			if (str.length() == 6)
+			{
+				for (int j = 0; j < str.length(); j++)
+				{
 					matrix[l][j] = str.charAt(j);
 				}
-			} else {
+			}
+			
+			else
+			{
 				Exception e = new Exception("The board from the txt file is either incomplete or has more than the required cells.\n");
 				throw e;
 			}
@@ -44,10 +55,13 @@ public class Solver
 		int length_of_car, direction = 0;
 		HashSet<Character> chars = new HashSet<>();
 
-		for (int i = 0; i < 6; i++) {
-			for (int j = 0; j < 6; j++) {
+		for (int i = 0; i < 6; i++)
+		{
+			for (int j = 0; j < 6; j++)
+			{
 				// Checking to see if the entry is a right entry and if the car has not already been visited.
-				if (matrix[i][j] != '.' && !chars.contains(matrix[i][j])) {
+				if (matrix[i][j] != '.' && !chars.contains(matrix[i][j]))
+				{
 					l = j;
 					int m = i;
 					// Adding the cars to a hashset that tracks if each car has been visited.
@@ -55,24 +69,30 @@ public class Solver
 					length_of_car = 1;
 					// Checking to see if the entry (car character) to the left if the same as the entry (car character) to the right and if there's not
 					// an invalid at that position.
-					if (j <= 4 && matrix[i][j + 1] != '.' && matrix[i][j + 1] == matrix[i][j]) {
+					if (j <= 4 && matrix[i][j + 1] != '.' && matrix[i][j + 1] == matrix[i][j])
+					{
 						direction = 1;
 						// Incrementing the horizontal position of the car in question
 						l++;
 						// Looping through to figure if the incremented position is the same as the previous horizontal position
-						while (l <= 5 && matrix[i][l] == matrix[i][l - 1]) {
+						while (l <= 5 && matrix[i][l] == matrix[i][l - 1])
+						{
 							length_of_car++;
 							l++;
 						}
 						// Setting a new car object to be the (horizontal, vertical) position of the car.
 						Car car = new Car(j, i, length_of_car, direction);
 						initBoard.getCars().put(matrix[i][j], car);
-					} else if (i <= 4 && matrix[i + 1][j] != '.' && matrix[i + 1][j] == matrix[i][j]) {
+					}
+					
+					else if (i <= 4 && matrix[i + 1][j] != '.' && matrix[i + 1][j] == matrix[i][j])
+					{
 						direction = -1;
 						// Incrementing the vertical position of the car in question
 						m++;
 						// Looping through to figure if the incremented position is the same as the previous horizontal position
-						while (m <= 5 && matrix[m][j] == matrix[m - 1][j]) {
+						while (m <= 5 && matrix[m][j] == matrix[m - 1][j])
+						{
 							length_of_car++;
 							m++;
 						}
@@ -127,21 +147,10 @@ public class Solver
 //		}
 //	}
 
-	public static void main(String[] args) {
-		solveFromFile("/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/src/A00.txt",
-				"/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/src/A00.txt");
-		for (int i = 0; i < matrix.length; i++) {
-			for (int j = 0; j < matrix.length; j++) {
-				System.out.print(matrix[i][j]);
-			}
-			System.out.println();
-		}
-		System.out.println(initBoard + " "  + isSolved(initBoard));
-		HashSet<GameNode> nodes = new HashSet<GameNode>();
-		nodes = initBoard.getNeighbors();
-		for (GameNode node:nodes) {
-			System.out.println(node + "  " + node.hashCode());
-		}
+
+	private static void instructionWriter(GameNode solution, String outputPath)
+	{
+		
 	}
 }
 

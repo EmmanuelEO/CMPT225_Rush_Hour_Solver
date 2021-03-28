@@ -1,6 +1,6 @@
 
-import rushhour.Car;
-import rushhour.GameNode;
+import rushhour.*;
+
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,7 +9,7 @@ public class FinalProject
 {
 	public static void main(String[] args)
 	{
-		
+		testGameNodeGetNeighbors2();
 	}
 	
 	public static void testGameNodeDeepCopy()
@@ -50,6 +50,55 @@ public class FinalProject
 		A.getCars().put('C', c);
 		A.getCars().put('D', d);
 		A.getCars().put('E', e);
+		
+		HashSet<GameNode> neighbors = A.getNeighbors();
+		
+		System.out.println("Size: " + neighbors.size() + "\n");
+		
+		for(GameNode N : neighbors)
+		{
+			for(char name : N.getCars().keySet())
+			{
+				System.out.println(name + ": " + N.getCars().get(name).getX() + " " + N.getCars().get(name).getY());
+			}
+			
+			System.out.println("");
+		}
+	}
+	
+	public static void testGameNodeGetNeighbors2()
+	{
+		Car a = new Car(0, 0);
+		a.setDir(1);
+		a.setLength(2);
+		
+		Car o = new Car(5, 0);
+		o.setDir(-1);
+		o.setLength(2);
+		
+		Car x = new Car(4, 2);
+		x.setDir(1);
+		x.setLength(2);
+		
+		Car q = new Car(3, 3);
+		q.setDir(1);
+		q.setLength(3);
+		
+		Car c = new Car(4, 4);
+		c.setDir(1);
+		c.setLength(2);
+		
+		Car r = new Car(2, 5);
+		r.setDir(1);
+		r.setLength(3);
+		
+		GameNode A = new GameNode();
+		A.getCars().put('A', a);
+		A.getCars().put('O', o);
+		A.getCars().put('X', x);
+		A.getCars().put('Q', q);
+		A.getCars().put('C', c);
+		A.getCars().put('R', r);
 		
 		HashSet<GameNode> neighbors = A.getNeighbors();
 		
@@ -110,4 +159,23 @@ public class FinalProject
 		}
 		
 	}
+
+	public static void tempTest()
+	{
+		Solver.solveFromFile("/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/src/A00.txt",
+				"/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/src/A00.txt");
+		for (int i = 0; i < Solver.matrix.length; i++) {
+			for (int j = 0; j < Solver.matrix.length; j++) {
+				System.out.print(Solver.matrix[i][j]);
+			}
+			System.out.println();
+		}
+		System.out.println(Solver.initBoard + " "  + Solver.isSolved(Solver.initBoard));
+		HashSet<GameNode> nodes = new HashSet<GameNode>();
+		nodes = Solver.initBoard.getNeighbors();
+		for (GameNode node:nodes) {
+			System.out.println(node + "  " + node.hashCode());
+		}
+	}
+	
 }
