@@ -107,7 +107,7 @@ public class FinalProject
 		for(GameNode N : neighbors)
 		{
 			for(char name : N.getCars().keySet())
-			{
+			{ 
 				System.out.println(name + ": " + N.getCars().get(name).getX() + " " + N.getCars().get(name).getY());
 			}
 			
