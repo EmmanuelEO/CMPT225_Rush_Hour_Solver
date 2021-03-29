@@ -22,7 +22,7 @@ public class Solver
 		}
 	}
 
-	private static void initializeBoard(String inputPath) throws Exception
+	public static void initializeBoard(String inputPath) throws Exception
 	{
 		initBoard = new GameNode();
 		matrix = new char[6][6];
