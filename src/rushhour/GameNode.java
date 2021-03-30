@@ -73,8 +73,8 @@ public class GameNode
 			res = res + ((car.getX()) + (car.getY()) * arr[i]);
 			i++;
 		}
-		final int prime = 1327;
-		return prime*((this == null) ? 0 : res);
+		System.out.println(i);
+		return (this == null) ? 0 : res;
 	}
 
 	public GameNode getParent()

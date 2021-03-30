@@ -9,12 +9,14 @@ public class Solver
 	private static GameNode initBoard;
 	private static char[][] matrix;
 
-	public static void solveFromFile(String inputPath, String outputPath) {
+	public static GameNode solveFromFile(String inputPath, String outputPath) {
 		try {
 			initializeBoard(inputPath);
+			return initBoard;
 		} catch (Exception e) {
 			System.out.println("The board has not been initialized.\n Please, check the board for errors and try again.\n");
 			e.printStackTrace();
+			return null;
 		}
 	}
 
@@ -128,14 +130,10 @@ public class Solver
 //	}
 
 	public static void main(String[] args) {
-		solveFromFile("/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/src/A00.txt",
-				"/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/src/A00.txt");
-		for (int i = 0; i < matrix.length; i++) {
-			for (int j = 0; j < matrix.length; j++) {
-				System.out.print(matrix[i][j]);
-			}
-			System.out.println();
-		}
+		GameNode gameNode = new GameNode();
+		gameNode = solveFromFile("/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/test_files/A00.txt", "/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/test_files/");
+		System.out.println(gameNode);
+		//for (int j = 0; j < files.length; j++) {
 		System.out.println(initBoard + " "  + isSolved(initBoard));
 		HashSet<GameNode> nodes = new HashSet<GameNode>();
 		nodes = initBoard.getNeighbors();
