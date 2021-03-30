@@ -8,6 +8,7 @@ public class GameNode
 	private GameNode parent;
 	private int g;
 	private int h = 0;
+	private int f;
 	
 	private HashMap<Character, Car> cars;
 	
@@ -36,7 +37,7 @@ public class GameNode
 	}
 
 	public int getF() {
-		return g + h;
+		return f;
 	}
 
 	public int getH() {
@@ -49,6 +50,11 @@ public class GameNode
 
 	public void setH(int h) {
 		this.h = h;
+	}
+	
+	public void setF(int f)
+	{
+		this.f = f;
 	}
 
 	@Override
@@ -233,7 +239,7 @@ public class GameNode
 	}
 
 		
-	// TODO make a method that calculates the h	
+	// TODO make a method that calculates the h, and also f
 
 
 

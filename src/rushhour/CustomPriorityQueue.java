@@ -35,4 +35,22 @@ public class CustomPriorityQueue extends PriorityQueue<GameNode>
 		nodes.remove(N.hashCode(), N);
 		return super.remove(N);
 	}
+	
+	public void update(GameNode N)
+	{
+		// The node that get(N.hashCode()) returns may have a different f than N
+		nodes.get(N.hashCode()).setF(N.getF());
+		
+		// All this does is update the position of N in the priority queue
+		super.remove(N);
+		super.add(N);
+	}
+	
+	@Override
+	public GameNode poll()
+	{
+		GameNode N = super.poll();
+		nodes.remove(N.hashCode(), N);
+		return N;
+	}
 }

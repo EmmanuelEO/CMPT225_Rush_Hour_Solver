@@ -185,7 +185,10 @@ public class FinalProject
 		{
 			System.out.println(N.hashCode());
 		}
+	}
+
+	public static void testPriorityQueue()
+	{
 		
-		System.out.println(Solver.initBoard);
 	}
 }
