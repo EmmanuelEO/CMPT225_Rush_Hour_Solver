@@ -46,10 +46,7 @@ public class GameNode
 
 	public void setG(int g) {
 		this.g = g;
-	}
-
-	public void setH(int h) {
-		this.h = h;
+		this.f = this.h + this.g;
 	}
 	
 	public void setF(int f)
@@ -239,10 +236,76 @@ public class GameNode
 	}
 
 		
-	// TODO make a method that calculates the h, and also f
+	public void calculateHeuristic()
+	{
+		// 1. Find number of cars directly blocking car X
+		// 1.1 Find number of cars blocking each car that is directly blocking car X (cars indirectly blocking car X)
+		
+		// First, build the board
+		char board[][] = new char[6][6];
+		for(int n = 0; n < 36; n++)
+			board[n % 6][n / 6] = ' '; // Initializing board to blank
 
-
-
+		for(char name : cars.keySet())
+		{
+			if(cars.get(name).getDir() == 1) // the car is horizontal
+			{
+				for(int n = 0; n < cars.get(name).getLength(); n++)
+				{
+					board[cars.get(name).getX() + n][cars.get(name).getY()] = name;
+				}
+			}
+			
+			else if(cars.get(name).getDir() == -1) // the car is vertical
+			{
+				for(int n = 0; n < cars.get(name).getLength(); n++)
+				{
+					board[cars.get(name).getX()][cars.get(name).getY() + n] = name;
+				}
+			}
+			
+			else
+			{
+				System.out.println("ERROR: The direction of car " + name + " is invalid");
+				return;
+			}
+		} // Done building board
+		
+		
+		h = 0; // cumulative h cost of the node
+		int directCost = 2; // relative cost of each car directly blocking car X
+		int indirectCost = 1; // relative cost of each car indirectly blocking car X
+		
+		
+		// 1. Find number of cars directly blocking car X		
+		for(int x = cars.get('X').getX() + cars.get('X').getLength(); x < 6; x++)
+		{
+			if(board[x][cars.get('X').getY()] != ' ')
+			{
+				 h += directCost;
+				 
+				 Car directBlocker = cars.get(board[x][cars.get('X').getY()]); // Must be vertical or else the board isn't solvable
+				
+				 // 1.1 Find number of cars blocking each car that is directly blocking car X (cars indirectly blocking car X)
+				 // First, find all cars blocking it on the top
+				 for(int y = directBlocker.getY() - 1; y >= 0; y--)
+				 {
+					 if(board[x][y] != ' ')
+						 h += indirectCost;
+				 }
+				 // Find all cars blocking it on the bottom
+				 for(int y = directBlocker.getY() + directBlocker.getLength(); y < 6; y++)
+				 {
+					 if(board[x][y] != ' ')
+						 h += indirectCost;
+				 }
+			}
+		} // end of for x
+		
+		f = g + h;
+	}
+	
+	
 }
 
 
