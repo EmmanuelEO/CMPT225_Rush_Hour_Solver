@@ -10,6 +10,7 @@ public class FinalProject
 	public static void main(String[] args)
 	{
 		testHashCodes();
+		//testGameNodeGetNeighbors2();
 	}
 		
 	public static void testGameNodeDeepCopy()
@@ -165,7 +166,7 @@ public class FinalProject
 
 	public static void testHashCodes()
 	{
-		String inputPath = "C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\TestFiles\\D36.txt";
+		String inputPath = "C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\TestFiles\\A00.txt";
 		
 		try
 		{
@@ -185,5 +186,7 @@ public class FinalProject
 		{
 			System.out.println(N.hashCode());
 		}
+		
+		System.out.println(Solver.initBoard);
 	}
 }
