@@ -10,7 +10,6 @@ public class FinalProject
 	public static void main(String[] args)
 	{
 		testHashCodes();
-		//testGameNodeGetNeighbors2();
 	}
 		
 	public static void testGameNodeDeepCopy()

@@ -8,7 +8,13 @@ public class CustomPriorityQueue extends PriorityQueue<GameNode>
 	
 	CustomPriorityQueue()
 	{
-		super();
+		super(new Comparator<GameNode>() {
+			@Override
+			public int compare(GameNode o1, GameNode o2) {
+				return o1.getF() - o2.getF();
+			}
+		});
+		
 		nodes = new HashMap<>();
 	}
 	
