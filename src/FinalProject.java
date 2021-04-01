@@ -12,22 +12,7 @@ public class FinalProject
 {
 	public static void main(String[] args)
 	{
-		//testHashCodes();
-		//testBFS();
-
-		/* ... the code being measured starts ... */
-		long startTime = System.nanoTime();
-
-		testAstar();
-		/* ... the code being measured ends ... */
-
-		long endTime = System.nanoTime();
-
-		// get difference of two nanoTime values
-		long timeElapsed = endTime - startTime;
-
-		System.out.println("Execution time in seconds : " +
-				timeElapsed / 1000000000);
+		
 	}
 		
 	public static void testGameNodeDeepCopy()
@@ -223,7 +208,8 @@ public class FinalProject
 		C.getCars().get('X').setPos(4, 3);
 		
 		try {
-			Solver.writeInstructions(C, "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/testWriteInstructions.txt");
+			//Solver.writeInstructions(C, "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/testWriteInstructions.txt");
+			Solver.writeInstructions(C, "C:\\Users\\Ian\\Desktop\\testWriteInstructions.sol");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -231,10 +217,14 @@ public class FinalProject
 
 	public static void testBFS()
 	{
-		String fileName = "D35.txt";
+		String fileName = "A01.txt";
 		
-		String inputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/test_files/" + fileName;
-		String outputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/testBFS.sol";
+		//String inputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/test_files/" + fileName;
+		//String outputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/testBFS.sol";
+		
+		String inputPath = "C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\CMPT225_Rush_Hour_Solver\\test_files\\" + fileName;
+		String outputPath = "C:\\Users\\Ian\\Desktop\\testBFS.sol";
+		
 		GameNode initBoard = null;
 		GameNode target = null;
 		

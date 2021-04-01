@@ -126,22 +126,31 @@ public class Solver
     {
         LinkedList<GameNode> nodes = new LinkedList<>();
         HashSet<GameNode> visitedNodes = new HashSet<>();
+        
         nodes.addLast(node);
         visitedNodes.add(node);
-        while (!nodes.isEmpty()) {
+        
+        while (!nodes.isEmpty())
+        {
             GameNode n = nodes.removeFirst();
             HashSet<GameNode> gameNodes = n.getNeighbors();
-            for (GameNode u:gameNodes) {
+            
+            for (GameNode u:gameNodes)
+            {
                 u.setParent(n);
-                if (isSolved(u)) {
+                if (isSolved(u))
+                {
                     return u;
                 }
-                if (!visitedNodes.contains(u)) {
+                
+                if (!visitedNodes.contains(u))
+                {
                     nodes.addLast(u);
                     visitedNodes.add(u);
                 }
             }
         }
+        
         return null;
     }
     
@@ -268,7 +277,6 @@ public class Solver
 	    }
 	    
 	    outFile.close();
-
 	}
 }
 
