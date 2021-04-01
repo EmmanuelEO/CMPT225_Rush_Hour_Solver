@@ -8,10 +8,12 @@ public class GameNode
 	private GameNode parent;
 	private int g;
 	private int h = 0;
+	private int f;
 	
 	private HashMap<Character, Car> cars;
 	
-	public GameNode() {
+	public GameNode()
+	{
 		cars = new HashMap<>();
 	}
 	
@@ -35,7 +37,7 @@ public class GameNode
 	}
 
 	public int getF() {
-		return g + h;
+		return f;
 	}
 
 	public int getH() {
@@ -43,18 +45,22 @@ public class GameNode
 	}
 
 	public void setG(int g) {
-		this.g = g;
+		this.f =this.h + g;
 	}
 
 	public void setH(int h) {
 		this.h = h;
 	}
+	
+	public void setF(int f)
+	{
+		this.f = f;
+	}
 
 	@Override
 	public String toString() {
 		return "GameNode{\n" +
-				"cars=" + cars +
-				'}';
+				"cars=\n" + cars + "\n}";
 	}
 
 	@Override
@@ -66,15 +72,30 @@ public class GameNode
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
+		int res = 0;
+		
 		int arr[] = {5, 11, 17, 29, 37, 41, 53, 59, 67, 71, 79, 97, 101, 107, 127, 137, 149, 157};
-		int i = 0, res = 0;
-		for (Car car: cars.values()) {
+		int i = 0;
+		
+		/*for (Car car: cars.values()) {
 			res = res + ((car.getX()) + (car.getY()) * arr[i]);
 			i++;
 		}
-		System.out.println(i);
-		return (this == null) ? 0 : res;
+		res *= 1327;*/
+		
+		
+		for(Character name : cars.keySet())
+		{
+			res += name.hashCode() * 17 + cars.get(name).getX() * name.hashCode() + cars.get(name).getY() * name.hashCode();
+			
+			//res = res % 10000;
+			
+			i++;
+		}
+		
+		return res;
 	}
 
 	public GameNode getParent()
@@ -86,12 +107,6 @@ public class GameNode
 	{
 		return cars;
 	}
-
-
-	// TODO
-	//  Make a method that finds all neighbors of a given node
-
-	// HashSet<GameNode> neighours;
 
 	public HashSet<GameNode> getNeighbors()
 	{
@@ -132,14 +147,9 @@ public class GameNode
 				return null;
 			}
 		} // Done building board
-		for (int i = 0; i < 6; i++) {
-			for (int j = 0; j < 6; j++) {
-				System.out.print(board[j][i]);
-			}
-			System.out.println();
-		}
+		
 
-//		 2. LOOP THROUGH ALL CARS
+		// 2. LOOP THROUGH ALL CARS
 		for(char name : cars.keySet())
 		{
 			// 2.1 FIND ALL AVAILABLE MOVES for the current car
@@ -157,7 +167,9 @@ public class GameNode
 						neighborNode.getCars().get(name).setPos(cars.get(name).getX(), y);
 						// This makes the neighbor identical to this one except for the current cars position, which will be changed
 						neighbors.add(neighborNode);
-					} else { // There is another car blocking the path
+					}
+					else
+					{ // There is another car blocking the path
 						break;
 					}
 				}
@@ -226,12 +238,8 @@ public class GameNode
 		return neighbors;
 	}
 
-
-	// TODO make a method that calculates the h, maybe the f as well
-	
-	
-	// TODO implement hashcode()
-
+		
+	// TODO make a method that calculates the h, and also f
 
 
 
