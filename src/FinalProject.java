@@ -200,16 +200,22 @@ public class FinalProject
 		
 		GameNode B = new GameNode(A);
 		
-		A.setF(2);
+		GameNode C = new GameNode();
+		C.setF(5);
+		
+		A.setF(6);
 		B.setF(1);
 		
 		CustomPriorityQueue Q = new CustomPriorityQueue();
 		
 		Q.add(A);
-				
-		Q.update(B);
+		Q.add(C);
+			
+		System.out.println(Q.peek().getF());
 		
-		System.out.println(Q.poll().getF());
+		Q.update(B);
+				
+		System.out.println(Q.peek().getF());
 	}
 
 	public static void testCalculateHeuristic()

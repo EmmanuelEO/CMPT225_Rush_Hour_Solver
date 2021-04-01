@@ -3,6 +3,7 @@ package rushhour;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.HashSet;
+import java.util.Stack;
 
 public class Solver
 {
@@ -148,8 +149,12 @@ public class Solver
 //	}
 
 
-	private static void instructionWriter(GameNode solution, String outputPath)
+	private static void writeInstructions(GameNode solution, String outputPath)
 	{
+		Stack<String> instructions = new Stack<>();
+		
+		
+		
 		
 	}
 }

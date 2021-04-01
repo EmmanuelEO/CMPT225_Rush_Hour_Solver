@@ -235,7 +235,6 @@ public class GameNode
 		return neighbors;
 	}
 
-		
 	public void calculateHeuristic()
 	{
 		// 1. Find number of cars directly blocking car X
