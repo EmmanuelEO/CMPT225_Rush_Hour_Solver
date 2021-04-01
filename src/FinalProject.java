@@ -1,7 +1,7 @@
 
 import rushhour.*;
 
-
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -9,7 +9,7 @@ public class FinalProject
 {
 	public static void main(String[] args)
 	{
-		testCustomPriorityQueue();
+		testWriteInstructions();
 	}
 		
 	public static void testGameNodeDeepCopy()
@@ -243,4 +243,25 @@ public class FinalProject
 		System.out.println(A.getH());
 	}
 	
+	public static void testWriteInstructions()
+	{
+		GameNode A = new GameNode();
+		
+		A.getCars().put('A', new Car(5, 2, 3, -1));
+		A.getCars().put('X', new Car(0, 3, 2, 1));
+		
+		GameNode B = new GameNode(A);
+		B.setParent(A);
+		B.getCars().get('A').setPos(5, 0);
+		
+		GameNode C = new GameNode(B);
+		C.setParent(B);
+		C.getCars().get('X').setPos(4, 3);
+		
+		try {
+			Solver.writeInstructions(C, "C:\\Users\\Ian\\Desktop\\testWriteInstructions.txt");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
