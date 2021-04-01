@@ -6,7 +6,7 @@ public class CustomPriorityQueue extends PriorityQueue<GameNode>
 {
 	private HashMap<Integer, GameNode> nodes;
 	
-	CustomPriorityQueue()
+	public CustomPriorityQueue()
 	{
 		super(new Comparator<GameNode>() {
 			@Override

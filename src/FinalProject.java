@@ -9,7 +9,7 @@ public class FinalProject
 {
 	public static void main(String[] args)
 	{
-		testHashCodes();
+		testCustomPriorityQueue();
 	}
 		
 	public static void testGameNodeDeepCopy()
@@ -187,8 +187,60 @@ public class FinalProject
 		}
 	}
 
-	public static void testPriorityQueue()
+	public static void testCustomPriorityQueue()
 	{
+		GameNode A = new GameNode();
+		A.getCars().put('A', new Car(0, 0, 2, 1));
+		A.getCars().put('O', new Car(5, 0, 3, -1));
+		A.getCars().put('X', new Car(0, 2, 2, 1));
+		A.getCars().put('Q', new Car(3, 3, 3, 1));
+		A.getCars().put('C', new Car(4, 4, 2, 1));
+		A.getCars().put('R', new Car(2, 5, 3, 1));
+		A.getCars().put('B', new Car(4, 1, 2, -1));
 		
+		GameNode B = new GameNode(A);
+		
+		GameNode C = new GameNode();
+		C.setF(5);
+		
+		A.setF(6);
+		B.setF(1);
+		
+		CustomPriorityQueue Q = new CustomPriorityQueue();
+		
+		Q.add(A);
+		Q.add(C);
+			
+		System.out.println(Q.peek().getF());
+		
+		Q.update(B);
+				
+		System.out.println(Q.peek().getF());
 	}
+
+	public static void testCalculateHeuristic()
+	{
+		// AA...O
+		// ....BO
+		// XX..BO
+		// ...QQQ
+		// ....CC
+		// ..RRR.
+		
+		
+		GameNode A = new GameNode();
+		
+		A.getCars().put('A', new Car(0, 0, 2, 1));
+		A.getCars().put('O', new Car(5, 0, 3, -1));
+		A.getCars().put('X', new Car(0, 2, 2, 1));
+		A.getCars().put('Q', new Car(3, 3, 3, 1));
+		A.getCars().put('C', new Car(4, 4, 2, 1));
+		A.getCars().put('R', new Car(2, 5, 3, 1));
+		A.getCars().put('B', new Car(4, 1, 2, -1));
+		
+		A.calculateHeuristic();
+		
+		System.out.println(A.getH());
+	}
+	
 }
