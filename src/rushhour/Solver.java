@@ -174,16 +174,6 @@ public class Solver
     
     
     public static void main(String[] args) {
-//        GameNode gameNode = new GameNode();
-//        gameNode = solveFromFile("/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/test_files/A03.txt", "/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/test_files/");
-//        for (int i = 0; i < matrix.length; i++) {
-//            for (int j = 0; j < matrix.length; j++) {
-//                System.out.print(matrix[i][j]);
-//            }
-//            System.out.println();
-//        }
-//        System.out.println(gameNode);
-//        GameNode solvedGameNode = BFS(gameNode);
         File folder = new File("/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/test_files/");
         File[] listOfFiles = folder.listFiles();
         int i = 0;
@@ -193,21 +183,20 @@ public class Solver
         for (File file : listOfFiles) {
             if (file.isFile()) {
                 String str = "/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/test_files/" + file.getName();
-                //System.out.println(file.getName());
+                System.out.println(file.getName() + " " + i);
                 gameNode = solveFromFile(str, str);
                 solvedGameNode[i] = BFS(gameNode);
-                //System.out.println(file.getName());
                 i++;
             }
         }
         try {
-            writeInstructions(solvedGameNode[solvedGameNode.length - 2], "/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/file.sol");
+            writeInstructions(solvedGameNode[27], "/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/file.txt");
         } catch (IOException e) {
             System.out.println("This is an exception");
             e.printStackTrace();
         }
         for (int j = 0; j < listOfFiles.length; j++) {
-            System.out.println(solvedGameNode[j]);
+            System.out.println(solvedGameNode[27]);
         }
         System.out.println(solvedGameNode.length);
     }
@@ -293,7 +282,7 @@ public class Solver
 	    }
 	    
 	    outFile.close();
-		
+
 	}
 
 }

@@ -79,27 +79,17 @@ public class GameNode
 	@Override
 	public int hashCode()
 	{
-		int res = 0;
+		int res = 97;
 		
 		int arr[] = {5, 11, 17, 29, 37, 41, 53, 59, 67, 71, 79, 97, 101, 107, 127, 137, 149, 157};
 		int i = 0;
 		
-		/*for (Car car: cars.values()) {
-			res = res + ((car.getX()) + (car.getY()) * arr[i]);
-			i++;
-		}
-		res *= 1327;*/
-		
-		
 		for(Character name : cars.keySet())
 		{
-			res += name.hashCode() + cars.get(name).getX() * name.hashCode() + cars.get(name).getY() * name.hashCode();
-			
-			//res = res % 10000;
-			
+			res += name.hashCode() + cars.get(name).getX() * name.hashCode() * -307843816 + cars.get(name).getY() * name.hashCode();
+
 			i++;
 		}
-		//System.out.println(res + " ghr");
 		return res;
 	}
 
@@ -311,8 +301,6 @@ public class GameNode
 		
 		f = g + h;
 	}
-	
-	
 }
 
 
