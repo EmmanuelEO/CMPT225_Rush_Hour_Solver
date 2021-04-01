@@ -9,7 +9,7 @@ public class FinalProject
 {
 	public static void main(String[] args)
 	{
-		testWriteInstructions();
+		testBFS();
 	}
 		
 	public static void testGameNodeDeepCopy()
@@ -29,44 +29,8 @@ public class FinalProject
 		else
 			System.out.println("FAILED");
 	}
-
-	public static void testGameNodeGetNeighbors()
-	{
-		GameNode A = new GameNode();
-		
-		Car c = new Car(2, 2);
-		c.setLength(2);
-		c.setDir(1);
-		
-		Car d = new Car(5, 0);
-		d.setLength(4);
-		d.setDir(-1);
-		
-		Car e = new Car(0, 5);
-		e.setLength(2);
-		e.setDir(1);
-		
-		
-		A.getCars().put('C', c);
-		A.getCars().put('D', d);
-		A.getCars().put('E', e);
-		
-		HashSet<GameNode> neighbors = A.getNeighbors();
-		
-		System.out.println("Size: " + neighbors.size() + "\n");
-		
-		for(GameNode N : neighbors)
-		{
-			for(char name : N.getCars().keySet())
-			{
-				System.out.println(name + ": " + N.getCars().get(name).getX() + " " + N.getCars().get(name).getY());
-			}
-			
-			System.out.println("");
-		}
-	}
 	
-	public static void testGameNodeGetNeighbors2()
+	public static void testGameNodeGetNeighbors()
 	{
 		Car a = new Car(0, 0, 2, 1);
 		Car o = new Car(5, 0, 2, -1);
@@ -144,32 +108,14 @@ public class FinalProject
 		
 	}
 
-	public static void tempTest()
-	{
-		Solver.solveFromFile("/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/src/A00.txt",
-				"/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/src/A00.txt");
-		
-		for (int i = 0; i < Solver.matrix.length; i++) {
-			for (int j = 0; j < Solver.matrix.length; j++) {
-				System.out.print(Solver.matrix[i][j]);
-			}
-			System.out.println();
-		}
-		System.out.println(Solver.initBoard + " "  + Solver.isSolved(Solver.initBoard));
-		HashSet<GameNode> nodes = new HashSet<GameNode>();
-		nodes = Solver.initBoard.getNeighbors();
-		for (GameNode node:nodes) {
-			System.out.println(node + "  " + node.hashCode());
-		}
-	}
-
 	public static void testHashCodes()
 	{
 		String inputPath = "C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\TestFiles\\A00.txt";
+		GameNode initBoard = null;
 		
 		try
 		{
-			Solver.initializeBoard(inputPath);
+			initBoard = Solver.initializeBoard(inputPath);
 		}
 		catch(Exception e)
 		{
@@ -177,7 +123,7 @@ public class FinalProject
 		}
 		
 		
-		HashSet<GameNode> S = Solver.initBoard.getNeighbors();
+		HashSet<GameNode> S = initBoard.getNeighbors();
 		
 		System.out.println("\n" + S.size() + "\n");
 		
@@ -260,6 +206,30 @@ public class FinalProject
 		
 		try {
 			Solver.writeInstructions(C, "C:\\Users\\Ian\\Desktop\\testWriteInstructions.txt");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void testBFS()
+	{
+		String fileName = "A00.txt";
+		
+		String inputPath = "C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\CMPT225_Rush_Hour_Solver\\test_files\\" + fileName;
+		String outputPath = "C:\\Users\\Ian\\Desktop\\testBFS.sol";
+		GameNode initBoard = null;
+		GameNode target = null;
+		
+		try {
+			initBoard = Solver.initializeBoard(inputPath);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		target = Solver.BFS(initBoard);
+		
+		try {
+			Solver.writeInstructions(target, outputPath);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

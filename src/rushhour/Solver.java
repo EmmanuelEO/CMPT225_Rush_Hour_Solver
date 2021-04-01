@@ -8,27 +8,38 @@ import java.util.Stack;
 
 public class Solver
 {
-    public static GameNode initBoard;
-    public static char[][] matrix;
-    
-    public static GameNode solveFromFile(String inputPath, String outputPath)
+    public static void solveFromFile(String inputPath, String outputPath)
     {
+    	GameNode initBoard = null;
+    	GameNode target = null;
+    	
         try {
-            initializeBoard(inputPath);
-            return initBoard;
+            initBoard = initializeBoard(inputPath);
         }
-        catch (Exception e)
-        {
-            System.out.println("The board has not been initialized.\n Please, check the board for errors and try again.\n");
+        catch (Exception e) {
+            System.out.println("The board has not been initialized.\nPlease, check the board for errors and try again.\n");
             e.printStackTrace();
-            return null;
+            return;
         }
+        
+        
+        
+        target = BFS(initBoard);
+        
+        
+        
+        try {
+			writeInstructions(target, outputPath);
+		}
+        catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     
-    public static void initializeBoard(String inputPath) throws Exception
+    public static GameNode initializeBoard(String inputPath) throws Exception
     {
-        initBoard = new GameNode();
-        matrix = new char[6][6];
+        GameNode initBoard = new GameNode();
+        char[][] matrix = new char[6][6];
         BufferedReader input = new BufferedReader(new FileReader(inputPath));
         
         String str = input.readLine();
@@ -105,14 +116,18 @@ public class Solver
                 }
             }
         }
+        
+        return initBoard;
     }
     
-    public static boolean isSolved(GameNode node) {
+    public static boolean isSolved(GameNode node)
+    {
         //To check if the X car is on the right position at the right of the board.
         return node.getCars().get('X').getX() == 4;
     }
 
-    public static GameNode BFS (GameNode node) {
+    public static GameNode BFS (GameNode node)
+    {
         LinkedList<GameNode> nodes = new LinkedList<>();
         HashSet<GameNode> visitedNodes = new HashSet<>();
         nodes.addLast(node);
@@ -134,7 +149,8 @@ public class Solver
         return null;
     }
     
-    public static GameNode Astar (GameNode node){
+    public static GameNode Astar (GameNode node)
+    {
         CustomPriorityQueue openQueue = new CustomPriorityQueue();
         
         HashMap<Integer, GameNode> closedSet = new HashMap<>();
@@ -172,46 +188,6 @@ public class Solver
         return null;
     }
     
-    
-    public static void main(String[] args) {
-//        GameNode gameNode = new GameNode();
-//        gameNode = solveFromFile("/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/test_files/A03.txt", "/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/test_files/");
-//        for (int i = 0; i < matrix.length; i++) {
-//            for (int j = 0; j < matrix.length; j++) {
-//                System.out.print(matrix[i][j]);
-//            }
-//            System.out.println();
-//        }
-//        System.out.println(gameNode);
-//        GameNode solvedGameNode = BFS(gameNode);
-        File folder = new File("/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/test_files/");
-        File[] listOfFiles = folder.listFiles();
-        int i = 0;
-        GameNode gameNode;
-        GameNode[] solvedGameNode = new GameNode[listOfFiles.length];
-
-        for (File file : listOfFiles) {
-            if (file.isFile()) {
-                String str = "/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/test_files/" + file.getName();
-                //System.out.println(file.getName());
-                gameNode = solveFromFile(str, str);
-                solvedGameNode[i] = BFS(gameNode);
-                //System.out.println(file.getName());
-                i++;
-            }
-        }
-        try {
-            writeInstructions(solvedGameNode[solvedGameNode.length - 2], "/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/file.sol");
-        } catch (IOException e) {
-            System.out.println("This is an exception");
-            e.printStackTrace();
-        }
-        for (int j = 0; j < listOfFiles.length; j++) {
-            System.out.println(solvedGameNode[j]);
-        }
-        System.out.println(solvedGameNode.length);
-    }
-
 	public static void writeInstructions(GameNode solution, String outputPath) throws IOException
 	{
 		Stack<String> instructions = new Stack<>();
