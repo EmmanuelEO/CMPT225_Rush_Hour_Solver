@@ -12,7 +12,18 @@ public class FinalProject
 {
 	public static void main(String[] args)
 	{
-
+		
+	}
+	
+	public static void testSolveTime()
+	{
+		long start = System.nanoTime();
+		
+		testAstar();
+		
+		long end = System.nanoTime();
+		
+		System.out.println("Execution Time: " + (end - start) / 1000000000 + " seconds");
 	}
 		
 	public static void testGameNodeDeepCopy()
@@ -247,7 +258,9 @@ public class FinalProject
 
 	public static void testAstar()
 	{
-		File folder = new File("/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/test_files/");
+		//File folder = new File("/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/test_files/");
+		File folder = new File("C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\CMPT225_Rush_Hour_Solver\\test_files\\");
+		
 		File[] listOfFiles = folder.listFiles();
 
 		GameNode initBoard;
@@ -258,14 +271,16 @@ public class FinalProject
 		{
 			if (file.isFile())
 			{
-				String inputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/test_files/" + file.getName();
-				//System.out.println("jbb");
+				String inputPath = "C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\CMPT225_Rush_Hour_Solver\\test_files\\" + file.getName();
+
+				//String outputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/sol_files/";
+				String outputPath = "C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\solutionFiles\\";
 				try
 				{
 					initBoard = Solver.initializeBoard(inputPath);
-					GameNode node = Solver.BFS(initBoard);
+					GameNode node = Solver.Astar(initBoard);
 					try {
-						Solver.writeInstructions(node, "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/sol_files/" + file.getName());
+						Solver.writeInstructions(node, outputPath + file.getName());
 					} catch (IOException e) {
 						System.out.println("This is an exception thrown when writing the solution files.");
 						e.printStackTrace();

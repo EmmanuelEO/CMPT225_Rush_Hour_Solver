@@ -43,8 +43,8 @@ public class CustomPriorityQueue extends PriorityQueue<GameNode>
 		nodes.put(N.hashCode(), N);
 		
 		// All this does is update the position of N in the priority queue
-		super.remove(N);
-		super.add(N);
+		super.remove(N); // O(n)
+		super.add(N); // O(log(n))
 	}
 	
 	@Override
@@ -54,4 +54,12 @@ public class CustomPriorityQueue extends PriorityQueue<GameNode>
 		nodes.remove(N.hashCode(), N);
 		return N;
 	}
+
+	@Override
+	public boolean contains(Object o)
+	{
+		GameNode N = (GameNode)o;
+		return nodes.containsKey(N.hashCode());		
+	}
+	
 }
