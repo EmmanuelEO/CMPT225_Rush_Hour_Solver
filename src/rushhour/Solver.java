@@ -156,6 +156,11 @@ public class Solver
         return null;
     }
     
+    public static void doingThings()
+    {
+    	System.out.println("Doing Things");
+    }
+    
     public static GameNode Astar (GameNode node)
     {
         CustomPriorityQueue openQueue = new CustomPriorityQueue();
