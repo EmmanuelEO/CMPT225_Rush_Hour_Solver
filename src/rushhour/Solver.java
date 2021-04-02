@@ -22,7 +22,9 @@ public class Solver
             return;
         }
 
+
         target = BFS(initBoard);
+        
 
         try {
 			writeInstructions(target, outputPath);

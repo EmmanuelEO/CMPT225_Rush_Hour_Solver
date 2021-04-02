@@ -12,7 +12,7 @@ public class FinalProject
 {
 	public static void main(String[] args)
 	{
-		
+
 	}
 		
 	public static void testGameNodeDeepCopy()
@@ -149,17 +149,19 @@ public class FinalProject
 		
 		GameNode B = new GameNode(A);
 		
-		GameNode C = new GameNode();
-		C.setF(5);
+		GameNode C = new GameNode(A);
+		C.getCars().get('A').setPos(1, 0);
+		
 		
 		A.setF(6);
 		B.setF(1);
+		C.setF(5);
 		
 		CustomPriorityQueue Q = new CustomPriorityQueue();
 		
 		Q.add(A);
 		Q.add(C);
-			
+							
 		System.out.println(Q.peek().getF());
 		
 		Q.update(B);
