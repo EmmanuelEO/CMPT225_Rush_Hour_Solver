@@ -14,12 +14,11 @@ public class FinalProject
 	{
 		//testHashCodes();
 		//testBFS();
-		testAstar();
-
-		long startTime = System.nanoTime();
 
 		/* ... the code being measured starts ... */
+		long startTime = System.nanoTime();
 
+		testAstar();
 		/* ... the code being measured ends ... */
 
 		long endTime = System.nanoTime();
@@ -27,8 +26,8 @@ public class FinalProject
 		// get difference of two nanoTime values
 		long timeElapsed = endTime - startTime;
 
-		System.out.println("Execution time in nanoseconds : " +
-				timeElapsed);
+		System.out.println("Execution time in seconds : " +
+				timeElapsed / 1000000000);
 	}
 		
 	public static void testGameNodeDeepCopy()
@@ -268,11 +267,17 @@ public class FinalProject
 			if (file.isFile())
 			{
 				String inputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/test_files/" + file.getName();
-
+				//System.out.println("jbb");
 				try
 				{
 					initBoard = Solver.initializeBoard(inputPath);
 					GameNode node = Solver.BFS(initBoard);
+					try {
+						Solver.writeInstructions(node, "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/sol_files/" + file.getName());
+					} catch (IOException e) {
+						System.out.println("This is an exception thrown when writing the solution files.");
+						e.printStackTrace();
+					}
 					solutionGameNodes[i] = node;
 					i++;
 				}
@@ -280,13 +285,12 @@ public class FinalProject
 				{
 					System.out.println("Bad Board");
 				}
-
 			}
 		}
 
-//		for (int j = 0; j < listOfFiles.length; j++) {
-//			System.out.println(solutionGameNodes[j]);
-//		}
+		for (int j = 0; j < listOfFiles.length; j++) {
+			System.out.println(solutionGameNodes[j]);
+		}
 
 	}
 }

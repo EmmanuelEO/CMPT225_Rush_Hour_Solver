@@ -160,22 +160,25 @@ public class Solver
             HashSet<GameNode> nodes = n.getNeighbors();
             for (GameNode node1: nodes) {
                 node1.calculateHeuristic();
+                node1.setParent(n);
+                node1.setG(n.getG()+1);
                 if (isSolved(node1)) {
-                    node1.setG(n.getG() + 1);
-                    node1.setParent(n);
                     return node1;
-                } else if (openQueue.contains(node1)) {
+                }
+                else if (openQueue.contains(node1))
+                {
                     if (node1.getF() < openQueue.getNode(node1.hashCode()).getF()){
                         openQueue.update(node1);
                     }
-                } else if (closedSet.containsKey(node1.hashCode())) {
+                }
+                else if (closedSet.containsKey(node1.hashCode()))
+                {
                     if (node1.getF() < closedSet.get(node1.hashCode()).getF()) {
                         closedSet.remove(node1.hashCode());
                         openQueue.add(node1);
                     }
-                }  else {
-                    node1.setG(n.getG()+1);
-                    node1.setParent(n);
+                }
+                else {
                     openQueue.add(node1);
                 }
             }

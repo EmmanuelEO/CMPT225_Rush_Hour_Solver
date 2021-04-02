@@ -39,7 +39,8 @@ public class CustomPriorityQueue extends PriorityQueue<GameNode>
 	public void update(GameNode N)
 	{
 		// The node that get(N.hashCode()) returns may have a different f than N
-		nodes.get(N.hashCode()).setF(N.getF());
+		nodes.remove(N.hashCode());
+		nodes.put(N.hashCode(), N);
 		
 		// All this does is update the position of N in the priority queue
 		super.remove(N);
