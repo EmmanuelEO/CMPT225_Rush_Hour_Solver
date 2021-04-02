@@ -1,6 +1,6 @@
-AA....
-......
-....XX
-.QQQ.O
-CC...O
-..RRRO
+AA...O
+.....O
+XX...O
+...QQQ
+....CC
+..RRR.

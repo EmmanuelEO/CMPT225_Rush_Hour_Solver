@@ -79,16 +79,12 @@ public class GameNode
 	@Override
 	public int hashCode()
 	{
-		int res = 97;
-		
-		int arr[] = {5, 11, 17, 29, 37, 41, 53, 59, 67, 71, 79, 97, 101, 107, 127, 137, 149, 157};
-		int i = 0;
+		Integer res = 97;
 		
 		for(Character name : cars.keySet())
 		{
-			res += name.hashCode() + cars.get(name).getX() * name.hashCode() * -307843816 + cars.get(name).getY() * name.hashCode();
-
-			i++;
+			res += cars.get(name).getX().toString().hashCode() * 157 + cars.get(name).getY().toString().hashCode() * 127;
+			res += res.toString().hashCode();
 		}
 		return res;
 	}

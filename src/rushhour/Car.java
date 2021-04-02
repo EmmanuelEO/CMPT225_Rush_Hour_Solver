@@ -50,12 +50,12 @@ public class Car
 		else return false;
 	}
 	
-	public int getX()
+	public Integer getX()
 	{
 		return pos % 6;
 	}
 	
-	public int getY()
+	public Integer getY()
 	{
 		return pos / 6;
 	}

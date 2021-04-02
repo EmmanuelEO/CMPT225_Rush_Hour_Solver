@@ -1,6 +1,9 @@
+import rushhour.Car;
+import rushhour.CustomPriorityQueue;
+import rushhour.GameNode;
+import rushhour.Solver;
 
-import rushhour.*;
-
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,7 +12,23 @@ public class FinalProject
 {
 	public static void main(String[] args)
 	{
-		testBFS();
+		//testHashCodes();
+		//testBFS();
+		testAstar();
+
+		long startTime = System.nanoTime();
+
+		/* ... the code being measured starts ... */
+
+		/* ... the code being measured ends ... */
+
+		long endTime = System.nanoTime();
+
+		// get difference of two nanoTime values
+		long timeElapsed = endTime - startTime;
+
+		System.out.println("Execution time in nanoseconds : " +
+				timeElapsed);
 	}
 		
 	public static void testGameNodeDeepCopy()
@@ -110,7 +129,7 @@ public class FinalProject
 
 	public static void testHashCodes()
 	{
-		String inputPath = "C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\TestFiles\\A00.txt";
+		String inputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/test_files/D35.txt";
 		GameNode initBoard = null;
 		
 		try
@@ -205,7 +224,7 @@ public class FinalProject
 		C.getCars().get('X').setPos(4, 3);
 		
 		try {
-			Solver.writeInstructions(C, "C:\\Users\\Ian\\Desktop\\testWriteInstructions.txt");
+			Solver.writeInstructions(C, "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/testWriteInstructions.txt");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -213,10 +232,10 @@ public class FinalProject
 
 	public static void testBFS()
 	{
-		String fileName = "A00.txt";
+		String fileName = "D35.txt";
 		
-		String inputPath = "C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\CMPT225_Rush_Hour_Solver\\test_files\\" + fileName;
-		String outputPath = "C:\\Users\\Ian\\Desktop\\testBFS.sol";
+		String inputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/test_files/" + fileName;
+		String outputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/testBFS.sol";
 		GameNode initBoard = null;
 		GameNode target = null;
 		
@@ -233,5 +252,41 @@ public class FinalProject
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void testAstar()
+	{
+		File folder = new File("/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/test_files/");
+		File[] listOfFiles = folder.listFiles();
+
+		GameNode initBoard;
+		GameNode[] solutionGameNodes = new GameNode[listOfFiles.length];
+		int i = 0;
+
+		for (File file:listOfFiles)
+		{
+			if (file.isFile())
+			{
+				String inputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/test_files/" + file.getName();
+
+				try
+				{
+					initBoard = Solver.initializeBoard(inputPath);
+					GameNode node = Solver.BFS(initBoard);
+					solutionGameNodes[i] = node;
+					i++;
+				}
+				catch(Exception e)
+				{
+					System.out.println("Bad Board");
+				}
+
+			}
+		}
+
+//		for (int j = 0; j < listOfFiles.length; j++) {
+//			System.out.println(solutionGameNodes[j]);
+//		}
+
 	}
 }

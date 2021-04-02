@@ -21,13 +21,9 @@ public class Solver
             e.printStackTrace();
             return;
         }
-        
-        
-        
+
         target = BFS(initBoard);
-        
-        
-        
+
         try {
 			writeInstructions(target, outputPath);
 		}
@@ -156,19 +152,19 @@ public class Solver
         HashMap<Integer, GameNode> closedSet = new HashMap<>();
         
         node.setG(0);
+        node.calculateHeuristic();
         node.setParent(null);
         openQueue.add(node);
         while (!openQueue.isEmpty()) {
             GameNode n = openQueue.poll();
             HashSet<GameNode> nodes = n.getNeighbors();
             for (GameNode node1: nodes) {
+                node1.calculateHeuristic();
                 if (isSolved(node1)) {
                     node1.setG(n.getG() + 1);
                     node1.setParent(n);
                     return node1;
                 } else if (openQueue.contains(node1)) {
-                    //System.out.println((node1 == null) + " dg ");
-                    //System.out.println((openQueue.getNode(node1.hashCode()) == null) + " df ");
                     if (node1.getF() < openQueue.getNode(node1.hashCode()).getF()){
                         openQueue.update(node1);
                     }
@@ -271,8 +267,6 @@ public class Solver
 	    outFile.close();
 
 	}
-
-
 }
 
 
