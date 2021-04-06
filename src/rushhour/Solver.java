@@ -56,14 +56,15 @@ public class Solver
             else
             {
                 Exception e = new Exception("The board from the txt file is either incomplete or has more than the required cells.\n");
+                input.close();
                 throw e;
             }
             l++;
             str = input.readLine();
         }
+        
         input.close();
         
-        GameNode gameNode = new GameNode();
         int length_of_car, direction = 0;
         HashSet<Character> chars = new HashSet<>();
         

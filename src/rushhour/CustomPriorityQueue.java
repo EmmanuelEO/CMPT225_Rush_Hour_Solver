@@ -4,6 +4,8 @@ import java.util.*;
 
 public class CustomPriorityQueue extends PriorityQueue<GameNode>
 {
+	private static final long serialVersionUID = 295768754L;
+	
 	private HashMap<Integer, GameNode> nodes;
 	
 	public CustomPriorityQueue()

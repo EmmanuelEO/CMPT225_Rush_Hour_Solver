@@ -15,6 +15,24 @@ public class FinalProject
 		
 	}
 	
+	public static void testSolveFromFile()
+	{
+		String fileName = "A09";
+		
+		String inputPath = "C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\CMPT225_Rush_Hour_Solver\\test_files\\" + fileName + ".txt";
+		String outputPath = "C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\solutionFiles\\" + fileName + ".sol";
+		
+		
+		double start = System.nanoTime();
+		
+		Solver.solveFromFile(inputPath, outputPath);
+		
+		double end = System.nanoTime();
+		
+		
+		System.out.println("Solved Board " + fileName + " in " + (end - start) / 1000000000 + " seconds.");
+	}
+	
 	public static void testSolveTime()
 	{
 		double start = System.nanoTime();
@@ -23,7 +41,7 @@ public class FinalProject
 		
 		double end = System.nanoTime();
 		
-		System.out.println("Execution Time: " + (end - start) / 1000000000 + " seconds");
+		System.out.println("Time to solve all boards: " + (end - start) / 1000000000 + " seconds");
 	}
 		
 	public static void testGameNodeDeepCopy()
