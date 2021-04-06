@@ -17,11 +17,11 @@ public class FinalProject
 	
 	public static void testSolveTime()
 	{
-		long start = System.nanoTime();
+		double start = System.nanoTime();
 		
 		testAstar();
 		
-		long end = System.nanoTime();
+		double end = System.nanoTime();
 		
 		System.out.println("Execution Time: " + (end - start) / 1000000000 + " seconds");
 	}
