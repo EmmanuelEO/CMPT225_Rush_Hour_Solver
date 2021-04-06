@@ -10,9 +10,9 @@ public class Solver
 {
     public static void solveFromFile(String inputPath, String outputPath)
     {
-    	GameNode initBoard = null;
-    	GameNode target = null;
-    	
+        GameNode initBoard = null;
+        GameNode target = null;
+
         try {
             initBoard = initializeBoard(inputPath);
         }
@@ -24,25 +24,25 @@ public class Solver
 
 
         target = BFS(initBoard);
-        
+
 
         try {
-			writeInstructions(target, outputPath);
-		}
+            writeInstructions(target, outputPath);
+        }
         catch (IOException e) {
-			e.printStackTrace();
-		}
+            e.printStackTrace();
+        }
     }
-    
+
     public static GameNode initializeBoard(String inputPath) throws Exception
     {
         GameNode initBoard = new GameNode();
         char[][] matrix = new char[6][6];
         BufferedReader input = new BufferedReader(new FileReader(inputPath));
-        
+
         String str = input.readLine();
         int l = 0;
-        
+
         while (str != null)
         {
             if (str.length() == 6)
@@ -52,7 +52,7 @@ public class Solver
                     matrix[l][j] = str.charAt(j);
                 }
             }
-            
+
             else
             {
                 Exception e = new Exception("The board from the txt file is either incomplete or has more than the required cells.\n");
@@ -62,12 +62,12 @@ public class Solver
             l++;
             str = input.readLine();
         }
-        
+
         input.close();
-        
+
         int length_of_car, direction = 0;
         HashSet<Character> chars = new HashSet<>();
-        
+
         for (int i = 0; i < 6; i++)
         {
             for (int j = 0; j < 6; j++)
@@ -97,7 +97,7 @@ public class Solver
                         Car car = new Car(j, i, length_of_car, direction);
                         initBoard.getCars().put(matrix[i][j], car);
                     }
-                    
+
                     else if (i <= 4 && matrix[i + 1][j] != '.' && matrix[i + 1][j] == matrix[i][j])
                     {
                         direction = -1;
@@ -115,10 +115,10 @@ public class Solver
                 }
             }
         }
-        
+
         return initBoard;
     }
-    
+
     public static boolean isSolved(GameNode node)
     {
         //To check if the X car is on the right position at the right of the board.
@@ -129,15 +129,15 @@ public class Solver
     {
         LinkedList<GameNode> nodes = new LinkedList<>();
         HashSet<GameNode> visitedNodes = new HashSet<>();
-        
+
         nodes.addLast(node);
         visitedNodes.add(node);
-        
+
         while (!nodes.isEmpty())
         {
             GameNode n = nodes.removeFirst();
             HashSet<GameNode> gameNodes = n.getNeighbors();
-            
+
             for (GameNode u:gameNodes)
             {
                 u.setParent(n);
@@ -145,7 +145,7 @@ public class Solver
                 {
                     return u;
                 }
-                
+
                 if (!visitedNodes.contains(u))
                 {
                     nodes.addLast(u);
@@ -153,16 +153,48 @@ public class Solver
                 }
             }
         }
-        
+
         return null;
     }
-    
+
+    public static GameNode DFS (GameNode node)
+    {
+        Stack<GameNode> nodes = new Stack<>();
+        HashSet<GameNode> visitedNodes = new HashSet<>();
+
+        nodes.push(node);
+        visitedNodes.add(node);
+
+        while (!nodes.isEmpty())
+        {
+            GameNode n = nodes.pop();
+            HashSet<GameNode> gameNodes = n.getNeighbors();
+
+            for (GameNode u:gameNodes)
+            {
+                u.setParent(n);
+                if (isSolved(u))
+                {
+                    return u;
+                }
+
+                if (!visitedNodes.contains(u))
+                {
+                    nodes.push(u);
+                    visitedNodes.add(u);
+                }
+            }
+        }
+
+        return null;
+    }
+
     public static GameNode Astar (GameNode node)
     {
         CustomPriorityQueue openQueue = new CustomPriorityQueue();
-        
+
         HashMap<Integer, GameNode> closedSet = new HashMap<>();
-        
+
         node.setG(0);
         node.calculateHeuristic();
         node.setParent(null);
@@ -198,90 +230,87 @@ public class Solver
         }
         return null;
     }
-    
-	public static void writeInstructions(GameNode solution, String outputPath) throws IOException
-	{
-		Stack<String> instructions = new Stack<>();
-		GameNode current = solution;
-		
-		// To Write Instructions
-		// START LOOP
-		// 1. Get current Node's Parent
-		// 2. Find which car has moved
-		// 2.1 Find direction and distance moved
-		// 2.2 Push the movement into the instructions Stack
-		// 3. Set current = current's parent
-		// END LOOP when current does not have a parent
-		// Write strings from the instructions Stack into the output file line by line
-		
-		while(current.getParent() != null)
-		{
-			GameNode parent = current.getParent();
-			
-			// 2. Find which car has moved
-			for(Character name : current.getCars().keySet())
-			{
-				if(current.getCars().get(name).getX() != parent.getCars().get(name).getX()
-						|| current.getCars().get(name).getY() != parent.getCars().get(name).getY())
-				{
-					// 2.1 Find direction and distance moved
-					// Instruction in format: NameDirectionDistance
-					String move = name.toString();
-					int dir = current.getCars().get(name).getDir();
-					int distance = 0;
-					
-					if(dir == 1) // car is horizontal
-					{
-						distance = current.getCars().get(name).getX() - parent.getCars().get(name).getX();
-						
-						if(distance > 0) // Moved Right
-						{
-							move += "R" + distance;
-						}
-						
-						else // Moved left
-						{
-							move += "L" + -distance;
-						}
-					}
-					
-					else // car is vertical
-					{
-						distance = current.getCars().get(name).getY() - parent.getCars().get(name).getY();
-						
-						if(distance > 0) // Moved Down
-						{
-							move += "D" + distance;
-						}
-						
-						else // Moved up
-						{
-							move += "U" + -distance;
-						}
-					}
-					
-					// 2.2 Push the movement into the instructions Stack
-					instructions.push(move);
-				}
-				
-			}
-			
-			// 3. Set current = current's parent
-			current = parent;
-		} // while (current.getParent() != null)
-		
-		// Write strings from the instructions Stack into the output file line by line
-		
-		BufferedWriter outFile = new BufferedWriter(new FileWriter(outputPath));
-		
-	    while(!instructions.isEmpty())
-	    {
-	    	outFile.write(instructions.pop() + "\n");
-	    }
-	    
-	    outFile.close();
-	}
+
+    public static void writeInstructions(GameNode solution, String outputPath) throws IOException
+    {
+        Stack<String> instructions = new Stack<>();
+        GameNode current = solution;
+
+        // To Write Instructions
+        // START LOOP
+        // 1. Get current Node's Parent
+        // 2. Find which car has moved
+        // 2.1 Find direction and distance moved
+        // 2.2 Push the movement into the instructions Stack
+        // 3. Set current = current's parent
+        // END LOOP when current does not have a parent
+        // Write strings from the instructions Stack into the output file line by line
+
+        while(current.getParent() != null)
+        {
+            GameNode parent = current.getParent();
+
+            // 2. Find which car has moved
+            for(Character name : current.getCars().keySet())
+            {
+                if(current.getCars().get(name).getX() != parent.getCars().get(name).getX()
+                        || current.getCars().get(name).getY() != parent.getCars().get(name).getY())
+                {
+                    // 2.1 Find direction and distance moved
+                    // Instruction in format: NameDirectionDistance
+                    String move = name.toString();
+                    int dir = current.getCars().get(name).getDir();
+                    int distance = 0;
+
+                    if(dir == 1) // car is horizontal
+                    {
+                        distance = current.getCars().get(name).getX() - parent.getCars().get(name).getX();
+
+                        if(distance > 0) // Moved Right
+                        {
+                            move += "R" + distance;
+                        }
+
+                        else // Moved left
+                        {
+                            move += "L" + -distance;
+                        }
+                    }
+
+                    else // car is vertical
+                    {
+                        distance = current.getCars().get(name).getY() - parent.getCars().get(name).getY();
+
+                        if(distance > 0) // Moved Down
+                        {
+                            move += "D" + distance;
+                        }
+
+                        else // Moved up
+                        {
+                            move += "U" + -distance;
+                        }
+                    }
+
+                    // 2.2 Push the movement into the instructions Stack
+                    instructions.push(move);
+                }
+
+            }
+
+            // 3. Set current = current's parent
+            current = parent;
+        } // while (current.getParent() != null)
+
+        // Write strings from the instructions Stack into the output file line by line
+
+        BufferedWriter outFile = new BufferedWriter(new FileWriter(outputPath));
+
+        while(!instructions.isEmpty())
+        {
+            outFile.write(instructions.pop() + "\n");
+        }
+
+        outFile.close();
+    }
 }
-
-
-
