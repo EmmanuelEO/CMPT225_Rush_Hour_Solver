@@ -12,7 +12,7 @@ public class FinalProject
 {
     public static void main(String[] args)
     {
-        testSolveTimeDFS();
+        testSolveTimeDijsktra();
     }
 
     public static void testSolveFromFile()
@@ -38,6 +38,17 @@ public class FinalProject
         double start = System.nanoTime();
 
         testAstar();
+
+        double end = System.nanoTime();
+
+        System.out.println("Time to solve all boards: " + (end - start) / 1000000000 + " seconds");
+    }
+
+    public static void testSolveTimeDijsktra()
+    {
+        double start = System.nanoTime();
+
+        testDijsktra();
 
         double end = System.nanoTime();
 
@@ -270,7 +281,7 @@ public class FinalProject
 
     public static void testBFS()
     {
-        File folder = new File("/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/test_files/");
+        File folder = new File("/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/test_files/");
         //File folder = new File("C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\CMPT225_Rush_Hour_Solver\\test_files\\");
 
         File[] listOfFiles = folder.listFiles();
@@ -283,10 +294,10 @@ public class FinalProject
         {
             if (file.isFile())
             {
-                String inputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/test_files/" + file.getName();
+                String inputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/test_files/" + file.getName();
                 //String inputPath = "C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\CMPT225_Rush_Hour_Solver\\test_files\\" + file.getName();
 
-                String outputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/sol_files/";
+                String outputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/sol_files/";
                 //String outputPath = "C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\solutionFiles\\";
                 try
                 {
@@ -315,7 +326,7 @@ public class FinalProject
 
     public static void testDFS()
     {
-        File folder = new File("/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/test_files/");
+        File folder = new File("/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/test_files/");
         //File folder = new File("C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\CMPT225_Rush_Hour_Solver\\test_files\\");
 
         File[] listOfFiles = folder.listFiles();
@@ -328,10 +339,10 @@ public class FinalProject
         {
             if (file.isFile())
             {
-                String inputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/test_files/" + file.getName();
+                String inputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/test_files/" + file.getName();
                 //String inputPath = "C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\CMPT225_Rush_Hour_Solver\\test_files\\" + file.getName();
 
-                String outputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/Final_Project/CMPT225_Rush_Hour_Solver/sol_files/";
+                String outputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/sol_files/";
                 //String outputPath = "C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\solutionFiles\\";
                 try
                 {
@@ -356,6 +367,53 @@ public class FinalProject
         for (int j = 0; j < listOfFiles.length; j++) {
             System.out.println(solutionGameNodes[j]);
         }
+    }
+
+    public static void testDijsktra()
+    {
+            File folder = new File("/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/test_files/");
+            //File folder = new File("C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\CMPT225_Rush_Hour_Solver\\test_files\\");
+
+            File[] listOfFiles = folder.listFiles();
+
+            GameNode initBoard;
+            GameNode solutionGameNodes[] = new GameNode[listOfFiles.length];
+            int i = 0;
+
+            for (File file:listOfFiles)
+            {
+                if (file.isFile())
+                {
+                    String inputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/test_files/" + file.getName();
+                    //String inputPath = "C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\CMPT225_Rush_Hour_Solver\\test_files\\" + file.getName();
+
+                    String outputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/sol_files/";
+                    //String outputPath = "C:\\Users\\Ian\\Desktop\\CMPT_Programs\\CMPT_225\\FinalProject\\solutionFiles\\";
+                    try
+                    {
+                        initBoard = Solver.initializeBoard(inputPath);
+                        GameNode node = Solver.Djisktra(initBoard);
+                        try {
+                            Solver.writeInstructions(node, outputPath + file.getName());
+                        } catch (IOException e) {
+                            System.out.println("This is an exception thrown when writing the solution files.");
+                            e.printStackTrace();
+                        }
+                        solutionGameNodes[i] = node;
+                        i++;
+                    }
+                    catch(Exception e)
+                    {
+                        System.out.println("Bad Board");
+                    }
+                }
+            }
+
+            //System.out.println(solutionGameNodes);
+
+            for (int j = 0; j < listOfFiles.length; j++) {
+                System.out.println(solutionGameNodes[j]);
+            }
     }
 
     public static void testAstar()
@@ -388,6 +446,7 @@ public class FinalProject
                         System.out.println("This is an exception thrown when writing the solution files.");
                         e.printStackTrace();
                     }
+                    //System.out.println(file.getName());
                     solutionGameNodes[i] = node;
                     i++;
                 }

@@ -1,10 +1,7 @@
 package rushhour;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Stack;
+import java.util.*;
 
 public class Solver
 {
@@ -189,6 +186,50 @@ public class Solver
         return null;
     }
 
+    public static GameNode Djisktra (GameNode node)
+    {
+        CustomPriorityQueue openQueue = new CustomPriorityQueue();
+
+        HashSet<GameNode> visitedNodes = new HashSet<>();
+
+        node.setParent(null);
+        node.setG(0);
+
+        HashSet<GameNode> initial_nodes;
+
+        openQueue.add(node);
+
+        while (!openQueue.isEmpty())
+        {
+            GameNode n = openQueue.poll();
+            visitedNodes.add(n);
+
+            initial_nodes = n.getNeighbors();
+
+            for (GameNode node_temp: initial_nodes) {
+                if (!openQueue.contains(node_temp))
+                    node_temp.setG(Integer.MAX_VALUE);
+            }
+
+            for (GameNode node1: initial_nodes) {
+                node1.setParent(n);
+                if (isSolved(node1)) {
+                    return node1;
+                }
+
+                if (!visitedNodes.contains(node1)) {
+                    int current_node_dist = n.getF() + 1;
+                    if (current_node_dist < node1.getF()) {
+                        node1.setG(current_node_dist);
+                        openQueue.add(node1);
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
     public static GameNode Astar (GameNode node)
     {
         CustomPriorityQueue openQueue = new CustomPriorityQueue();
@@ -228,6 +269,11 @@ public class Solver
             }
             closedSet.put(n.hashCode(), n);
         }
+        return null;
+    }
+
+    public static GameNode BelmanFord (GameNode node)
+    {
         return null;
     }
 

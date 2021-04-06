@@ -25,6 +25,10 @@ public class GameNode
         {
             this.cars.put(name, new Car(node.getCars().get(name)));
         }
+
+        g = node.getG();
+        h = node.getH();
+        f = node.getF();
     }
 
     public void setParent(GameNode p)
@@ -51,7 +55,7 @@ public class GameNode
 
     public void setF(int f)
     {
-        this.f = f;
+        this.f = this.h + this.g;
     }
 
     @Override
