@@ -1,6 +1,6 @@
-QR2
 PD2
 XL1
+QR2
 BD4
 XR1
 AR1

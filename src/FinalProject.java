@@ -3,7 +3,9 @@ import rushhour.CustomPriorityQueue;
 import rushhour.GameNode;
 import rushhour.Solver;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,7 +14,7 @@ public class FinalProject
 {
     public static void main(String[] args)
     {
-        testSolveTimeDijsktra();
+        testSolveTimeAstar();
     }
 
     public static void testSolveFromFile()
@@ -392,7 +394,7 @@ public class FinalProject
                     try
                     {
                         initBoard = Solver.initializeBoard(inputPath);
-                        GameNode node = Solver.Djisktra(initBoard);
+                        GameNode node = Solver.Dijsktra(initBoard);
                         try {
                             Solver.writeInstructions(node, outputPath + file.getName());
                         } catch (IOException e) {
@@ -414,6 +416,51 @@ public class FinalProject
             for (int j = 0; j < listOfFiles.length; j++) {
                 System.out.println(solutionGameNodes[j]);
             }
+    }
+
+    public static boolean solutionIsCorrect(String boardName, GameNode target) throws IOException// solutions need to be in .txt files
+    {
+        String inputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/test_files/" + boardName;
+        String outputPath = "/Users/emmanuelokonkwo/Desktop/CMPT225/FinalProject/CMPT225_Rush_Hour_Solver/sol_files/" + boardName;
+
+        BufferedReader solutionFile = new BufferedReader(new FileReader(outputPath));
+        GameNode initBoard = null;
+
+        try {
+            initBoard = Solver.initializeBoard(inputPath);
+        } catch (Exception e) {
+            System.out.println("Bad Board");
+            e.printStackTrace();
+        }
+
+        String instruction = solutionFile.readLine();
+
+        while(instruction != null)
+        {
+            char name = instruction.charAt(0);
+            char cDir = instruction.charAt(1);
+            int nDir = 1;
+            int distance = Character.getNumericValue(instruction.charAt(2));
+
+            if(cDir == 'L' || cDir == 'U')
+                nDir = -1;
+
+            if(initBoard.getCars().get(name).getDir() == 1) // if the car is horizontal
+            {
+                initBoard.getCars().get(name).setPos(initBoard.getCars().get(name).getX() + nDir * distance, initBoard.getCars().get(name).getY());
+            }
+
+            else if(initBoard.getCars().get(name).getDir() == -1) // if the car is vertical
+            {
+                initBoard.getCars().get(name).setPos(initBoard.getCars().get(name).getX(), initBoard.getCars().get(name).getY() + nDir * distance);
+            }
+
+            instruction = solutionFile.readLine();
+        }
+
+        solutionFile.close();
+
+        return target.equals(initBoard);
     }
 
     public static void testAstar()
@@ -442,11 +489,11 @@ public class FinalProject
                     GameNode node = Solver.Astar(initBoard);
                     try {
                         Solver.writeInstructions(node, outputPath + file.getName());
+                        System.out.println(solutionIsCorrect(file.getName(), node));
                     } catch (IOException e) {
                         System.out.println("This is an exception thrown when writing the solution files.");
                         e.printStackTrace();
                     }
-                    //System.out.println(file.getName());
                     solutionGameNodes[i] = node;
                     i++;
                 }
@@ -457,9 +504,9 @@ public class FinalProject
             }
         }
 
-        for (int j = 0; j < listOfFiles.length; j++) {
-            System.out.println(solutionGameNodes[j]);
-        }
+//        for (int j = 0; j < listOfFiles.length; j++) {
+//            System.out.println(solutionGameNodes[j]);
+//        }
 
     }
 }

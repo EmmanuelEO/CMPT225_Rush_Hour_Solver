@@ -186,7 +186,7 @@ public class Solver
         return null;
     }
 
-    public static GameNode Djisktra (GameNode node)
+    public static GameNode Dijsktra (GameNode node)
     {
         CustomPriorityQueue openQueue = new CustomPriorityQueue();
 
@@ -269,11 +269,6 @@ public class Solver
             }
             closedSet.put(n.hashCode(), n);
         }
-        return null;
-    }
-
-    public static GameNode BelmanFord (GameNode node)
-    {
         return null;
     }
 
