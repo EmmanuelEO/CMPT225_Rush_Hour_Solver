@@ -1,3 +1,3 @@
-# CMPT225_Rush_Hour_Solver
+# Rush_Hour_Solver_Project
 
-I am editing this file.
+
